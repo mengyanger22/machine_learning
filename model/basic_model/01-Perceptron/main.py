@@ -1,6 +1,6 @@
 import torch
 
-from Perceptron import Perceptron, PerceptronLiHangBook
+from Perceptron import Perceptron, PerceptronLiHangBook, PerceptronLiHangBookDualForm
 
 def basic():
     w = torch.tensor([0., 0.], requires_grad=False)
@@ -44,9 +44,37 @@ def book():
                 print(model.w)
                 print(model.b)
 
+
+def bookDualForm():
+    x = torch.tensor([[3., 3.], [4., 3.], [1., 1.]])
+    y = torch.tensor([1., 1., -1.])
+    n = len(x)
+    alpha = torch.tensor([0. for _ in range(n)])
+    model = PerceptronLiHangBookDualForm(x, y, alpha)
+    lr = torch.tensor(1.)
+
+    flag = True
+    while flag:
+        flag = False
+        for i in range(n):
+            if y[i]*model(i) <= 0:
+                model.alpha[i] += lr
+                # w, b = model.getWB()
+                print("-----------------" + str(i) + "-------------------")
+                print(model.alpha)
+                flag = True
+
+
+def mnist():
+    def getData():
+        pass
+    # 见DL
+    pass
+
 def main():
     # basic()
-    book()
+    # book()
+    bookDualForm()
 
 if __name__ == "__main__":
     main()

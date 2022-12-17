@@ -3,6 +3,7 @@ from torch import nn
 
 class Perceptron(nn.Module):
     def __init__(self, w, b=0.0):
+        super(Perceptron, self).__init__()
         self.w = w
         self.b = b
     def forward(self, x):

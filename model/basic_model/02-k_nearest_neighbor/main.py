@@ -2,11 +2,14 @@ import mnist
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 X_train = mnist.X_train
 y_train = mnist.y_train
 X_test = mnist.X_test
 y_test = mnist.y_test
+n_train = mnist.n_train
+n_test = mnist.n_test
 
 df_train = mnist.df_train
 df_test = mnist.df_test
@@ -20,11 +23,11 @@ def dist(x, y):
 k_values = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
 train_pred_lists = [[] for _ in range(len(k_values))]
 
-for i in range(0, 6000):
+for i in tqdm(range(0, n_train)):
     train_vec_one = df_train.iloc[i]
     train_distance_list = []
     train_idx_counter = []
-    for j in range(0, 6000):
+    for j in range(0, n_train):
         train_vec = df_train.iloc[j]
         euclidean_dist = dist(train_vec_one, train_vec)
         train_distance_list.append(euclidean_dist)
@@ -43,11 +46,11 @@ for i in range(0, 6000):
     
 
 test_pred_lists = [[] for _ in range(len(k_values))]
-for i in range(0, 1000):
+for i in tqdm(range(0, n_test)):
     test_vec = df_test.iloc[i]
     test_distance_list = []
     test_idx_list = []
-    for j in range(0, 6000):
+    for j in range(0, n_train):
         train_vec = df_train.iloc[j]
         euclidean_dist = dist(test_vec, train_vec)
         test_distance_list.append(euclidean_dist)
@@ -71,7 +74,7 @@ for idx in range(len(k_values)):
     for l1, l2 in zip(train_pred_lists[idx], y_train.tolist()):
         if l1 == l2:
             train_pred += 1
-    accuracy = train_pred / 6000
+    accuracy = train_pred / n_train
     train_pred_result.append((round(accuracy * 100, 2)))
     print("The train accuracy is " + str(round(accuracy * 100, 2)) + "% for K=" + str(k_values[idx]))
 
@@ -81,7 +84,7 @@ for idx in range(len(k_values)):
     for l1, l2 in zip(test_pred_lists[idx], y_test.tolist()):
         if l1 == l2:
             test_pred += 1
-    accuracy = test_pred / 1000
+    accuracy = test_pred / n_test
     test_pred_result.append((round(accuracy * 100, 2)))
     print("The test accuracy is " + str(accuracy * 100) + "% for K=" + str(k_values[idx]))
 

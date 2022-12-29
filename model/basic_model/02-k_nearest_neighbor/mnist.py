@@ -22,7 +22,7 @@ def show_digit(x_vec, label):
 
 show_digit(X[0], y[0])
 
-n_train, n_test = 6000, 1000
+n_train, n_test = 600, 100
 split_loc = 60000
 
 X_train, y_train = X[:n_train, :], y[:n_train]

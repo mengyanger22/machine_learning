@@ -49,7 +49,7 @@ class NaiveBayes(object):
                 else:
                     y[i] += torch.log(little)
 
-        print(y)
+        # print(y)
         return torch.argmax(y)        
 
 data_root = "D:\linux\opt\pjs\machine_learning\data"
@@ -76,6 +76,6 @@ pred_num = 0
 for i in range(n_test):
     if int(model.pred(test_X[i])) == int(test_Y[i]):
         pred_num += 1
-    print(test_Y[i])
+    # print(test_Y[i])
 pred_num /= n_test
 print("test acc is " + str(pred_num))

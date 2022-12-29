@@ -60,6 +60,7 @@ for i in range(0, 1000):
     for idx, K in enumerate(k_values):
         index_list = list(df_sorted["index"].iloc[0:K])
         distance = list(df_sorted["distance"].iloc[0:K])
+        # 测试集上用来预测的标签采用的是训练集上得到的标签而不是原始标签
         res_list = [train_pred_lists[idx][i] for i in index_list]
         pred_value = max(res_list, key=res_list.count)
         test_pred_lists[idx].append(pred_value)
